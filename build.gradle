@@ -5,10 +5,21 @@
  * For more details take a look at the Java Libraries chapter in the Gradle
  * User Manual available at https://docs.gradle.org/6.0/userguide/java_library_plugin.html
  */
+apply plugin: 'java'
+apply plugin: 'application'
 
-plugins {
-    // Apply the java-library plugin to add support for Java Library
-    id 'java-library'
+mainClassName = 'org.ilkengin.bpmnpathfinder.Application'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group = 'org.ilkengin.bpmnpathfinder'
+version = '0.0.1'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.ilkengin.bpmnpathfinder.Application'
+    }
 }
 
 repositories {
@@ -18,9 +29,6 @@ repositories {
 }
 
 dependencies {
-    // This dependency is exported to consumers, that is to say found on their compile classpath.
-    api 'org.apache.commons:commons-math3:3.6.1'
-
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:28.0-jre'
 	implementation 'org.camunda.bpm:camunda-engine:7.9.0'
