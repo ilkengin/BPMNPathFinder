@@ -32,6 +32,8 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:28.0-jre'
 	implementation 'org.camunda.bpm:camunda-engine:7.9.0'
+	implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+	implementation 'com.google.code.gson:gson:2.8.6'
 	
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
