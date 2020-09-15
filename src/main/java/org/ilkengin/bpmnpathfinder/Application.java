@@ -1,7 +1,6 @@
 package org.ilkengin.bpmnpathfinder;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.List;
 
 import org.camunda.bpm.model.bpmn.Bpmn;
@@ -31,14 +30,19 @@ public class Application {
 			BpmnModelInstance modelInstance = Bpmn.readModelFromStream(new ByteArrayInputStream(response.body().getBpmn20Xml().getBytes()));
 			
 			// Get Traverser Service
-			BpmnTraverserService bpmnTraverserService = AppConfig.getBpmnTraverser(modelInstance);
+			AppConfig appConfig = new AppConfig();
+			BpmnTraverserService bpmnTraverserService = appConfig.getBpmnTraverser(modelInstance);
 			
 			List<String> inBetweenNodeIds = bpmnTraverserService.findPathBetween(startNodeId, targetNodeId);
-			if (inBetweenNodeIds != null) {				
-				inBetweenNodeIds.forEach(System.out::println);
+			if (inBetweenNodeIds == null) {
+				System.exit(-1);
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+			
+			System.out.println(String.format("The path from %s to %s is:", startNodeId, targetNodeId));
+			System.out.print(inBetweenNodeIds);
+			System.exit(0);
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
 			System.exit(-1);
 		} catch (Exception e) {
 			e.printStackTrace();
